@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Quicksand", sans-serif;
+    /* border: 1px solid red; */
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    
+}
+
+.sidebar {
+    background-color: rgb(20, 20, 20);
+    color: rgb(214, 214, 214);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.9rem;
+    overflow: auto;
+    box-shadow: 5px 0 10px rgb(105, 105, 105);
+    z-index: 1;
+}
+
+.body {
+    background-color: rgb(30, 30, 30);
+    flex-grow: 1;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 20px;
+    padding-left: 20px;
+    max-width: 200px;
+}
+
+#profile-pic:hover, #name:hover{
+    filter: drop-shadow(0 0 20px white);
+    text-shadow: 0 0 10px white, 0 0 5px white;
+    cursor: pointer;
+}
+
+.my-tasks, .my-projects {
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    font-weight: bold;
+    white-space: nowrap;
+    
+}
+#name {
+    font-size: 1.2rem;
+}
+#tasks, #projects {
+    display: flex;
+    flex-direction: column;
+    
+}
+#tasks div, #projects div {
+    padding: 10px 20px;
+}
+#tasks div:hover, #projects div:hover {
+    cursor: pointer;
+    background-color: rgb(61, 61, 61);
+}
+
+.add:hover {
+    text-shadow: 0 0 10px white, 0 0 5px white;
+    cursor: pointer;
+}
+
+.add {
+    color: white;
+    font-size: 1.5rem;
+    
+}
+
+#createProjectModal {
+    border-radius: 10px;
+    background-color: rgb(30, 30, 30);
+    height: 250px;
+    width: 600px;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+}
+#createProjectModal::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+#createProjectForm {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+    color: white;
+    /* gap: 20px; */
+    
+}
+/* #createProjectForm > * {
+    margin: 20px;
+} */
+
+#createProjectText {
+    align-self: flex-start;
+    border: none;
+    background-color: rgb(30, 30, 30);
+    color: white;
+    font-weight: bold;
+    outline: none;
+    font-size: 1.4rem;
+    margin-left: 40px;
+    width: 90%;
+
+}
+button[type="submit"] {
+    padding: 10px 40px;
+    border-radius: 20px;
+    color: white;
+    background-color: rgb(67, 117, 224);
+    border: none;
+    margin-bottom: 40px;
+    margin-right: 40px;
+    font-weight: bold;
+}
+button[type="submit"]:disabled {
+    background-color: rgb(39, 65, 111);
+    pointer-events: none;
+}
+
+button[type="submit"]:hover {
+    background-color: rgb(95, 140, 235);
+    cursor: pointer;
+}
+
+.close {
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.close:hover {
+    cursor: pointer;
+}

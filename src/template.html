@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="profile">
+            <div id="profile-pic"><img src="/images/profile.png" alt="profile" height="50px"></div>
+            <div id="name">Ingrid Lin</div> 
+        </div>
+        <div id="tasks">
+            <div class="my-tasks"><span>My tasks</span><span class="add" id="createTask">+</span></div>
+            <div class="today">Today</div>
+            <div class="week">This Week</div>
+            <div class="high-priority">High Priority</div>
+            <div class="medium-priority">Medium Priority</div>
+            <div class="low-priority">Low Priority</div>
+            <div class="completed">Completed</div>
+        </div>
+        <div id="projects">
+            <div class="my-projects"><span>My projects</span><span class="add" id="createProject">+</span></div>
+            <div class="project">home</div>
+
+        </div>
+    </div>
+
+    <div class="body">
+
+    </div>
+
+    <dialog id="createProjectModal">
+        <form action="" method="dialog" id="createProjectForm">
+            <img src="/images/close.png" alt="close" id="closeProjectModal" class="close">
+            <input type="text" id="createProjectText" placeholder="Add a project" required>
+            <button type="submit" id="submitProject" disabled>continue</button>
+        </form>
+    </dialog>
+
+</body>
+</html>
