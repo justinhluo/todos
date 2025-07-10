@@ -1,24 +1,29 @@
 import "./styles.css"
 import {Project, createProject} from "./createProject.js";
 import {Task, createTask } from "./createTask.js";
-import { renderTasksHeader } from "./renderTasks.js"
-import {allProjects, allTasks} from "./store.js";
+import { renderTasks } from "./renderTasks.js"
+import {allProjects, allTasks, setActiveProject, getActiveProject} from "./store.js";
 
 
-document.getElementById("createProject").addEventListener("click", createProject);
-document.getElementById("createTask").addEventListener("click", (e) => {
+document.getElementById("createProject").addEventListener("click", (e) => {
     e.stopPropagation();
-    createTask();
+    createProject();
 });
-document.getElementById("my-tasks").addEventListener("click", renderTasksHeader);
+document.getElementById("create-task").addEventListener("click", (e) => {
+    e.stopPropagation();
+    createTask("");
+});
+document.getElementById("my-tasks").addEventListener("click", () => {
+    renderTasks();
+    setActiveProject(null);
+
+});
 
 
 
 const defaultProject = new Project("Home", "This is a test project, feel free to delete.");
-// defaultProject.addToSidebar();
-// defaultProject.renderContent();
 
-renderTasksHeader();
+renderTasks();
 
 
 //  click my tasks-> list task objects

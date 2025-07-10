@@ -6,10 +6,12 @@ const submit = document.getElementById("submitProject");
 const projects = document.getElementById("projects");
 const content = document.getElementById("content");
 const description = document.getElementById("createProjectDescription");
-let activeProject = null;
+const optgroup = document.querySelector("optgroup");
+
 import deleteIcon from "/images/delete.png";
-import './createTask.js';
-import { allProjects, allTasks } from './store.js';
+
+import { allProjects, allTasks, getActiveProject, setActiveProject} from './store.js';
+import { createTask } from "./createTask.js";
 
 export function createProject() {
     modal.showModal();
@@ -33,7 +35,7 @@ submit.addEventListener("click", submitProject);
 function submitProject(event) {
     event.preventDefault();
     const newProject = new Project(text.value, description.value);
-    newProject.renderContent();
+    newProject.renderProjectContent();
     form.reset();
     modal.close();
     submit.disabled = true;
@@ -46,12 +48,13 @@ export class Project {
     this.tasks = [];
     allProjects.push(this);
 
+    //create add task button 
     const addTask = document.createElement("button");
     addTask.textContent = "Add task";
     addTask.classList.add("add-task-btn");
-    addTask.addEventListener("click", () => alert(this.name));
+    addTask.addEventListener("click", () => createTask(this.name));
     this.addTask = addTask;
-
+    //add to sidebar
     const projectDiv = document.createElement("div");
     const projectName = document.createElement("span");
     const deleteProject = document.createElement("img");
@@ -62,24 +65,31 @@ export class Project {
     projects.appendChild(projectDiv);
     projectDiv.classList.add("sidebar-project");
     deleteProject.classList.add("delete-icon");
-    projectDiv.addEventListener("click", () => this.renderContent());
+    projectDiv.addEventListener("click", () => {
+      this.renderProjectContent();
+      setActiveProject(this);
+    });
     deleteProject.addEventListener("click", (e) => {
       e.stopPropagation();
       this.deleteProject();
   });
     this.sidebarElement = projectDiv;
-  }
+
     
-  // addToSidebar() {
-
-  // }
-
+    const option = document.createElement("option");
+    option.value = this.name;
+    option.textContent = this.name;
+    optgroup.appendChild(option);
+    this.optionElement = option;
+  }
+ 
   deleteProject () {
     projects.removeChild(this.sidebarElement);
+    optgroup.removeChild(this.optionElement);
 
-    if (activeProject === this) {
+    if (getActiveProject() === this) {
       content.innerHTML = "";
-      activeProject = null;
+      setActiveProject(null);
     }
     const index = allProjects.indexOf(this);
     
@@ -94,8 +104,7 @@ export class Project {
     });
   }
 
-  renderContent() {
-    activeProject = this;
+  renderProjectContent() {
     content.innerHTML = "";
     const projectHeaderTop = document.createElement("div");
     const projectHeader = document.createElement("div");
@@ -112,10 +121,9 @@ export class Project {
     projectHeader.appendChild(projectDescription);
     content.appendChild(projectHeader);
 
-    //create tasks container
+    const taskContainer = document.createElement("div");
+    this.tasks.forEach(task=>taskContainer.appendChild(task.renderTask()));
+    content.appendChild(taskContainer);
   }
 
-  addTask(task) {
-    this.tasks.push(task);
-  }
 }

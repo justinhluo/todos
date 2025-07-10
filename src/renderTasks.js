@@ -1,8 +1,9 @@
 import { createTask } from "./createTask.js";
 import {allProjects, allTasks} from "./store.js";
+import { Project } from './createProject.js';
 const content = document.getElementById("content");
 
-export function renderTasksHeader() {
+export function renderTasks() {
     content.innerHTML = "";
     const projectHeaderTop = document.createElement("div");
     const projectHeader = document.createElement("div");
@@ -18,10 +19,46 @@ export function renderTasksHeader() {
     const addTask = document.createElement("button");
     addTask.textContent = "Add task";
     addTask.classList.add("add-task-btn");
-    addTask.addEventListener("click", () => createTask());
+    addTask.addEventListener("click", () => createTask(""));
 
     projectHeaderTop.appendChild(addTask);
     projectHeader.appendChild(projectHeaderTop);
     projectHeader.appendChild(projectDescription);
     content.appendChild(projectHeader);
+
+    const taskContainer = document.createElement("div");
+
+    allTasks.forEach(task=>taskContainer.appendChild(task.renderTask()));
+
+    content.appendChild(taskContainer);
+
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (import.meta.hot) {
+  import.meta.hot.decline();
 }
