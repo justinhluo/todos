@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todos</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <body>
     <div class="sidebar">
@@ -16,26 +17,60 @@
             <div class="today">Today</div>
             <div class="week">This Week</div>
             <div class="high-priority">High Priority</div>
-            <div class="medium-priority">Medium Priority</div>
-            <div class="low-priority">Low Priority</div>
             <div class="completed">Completed</div>
         </div>
         <div id="projects">
             <div class="my-projects"><span>My projects</span><span class="add" id="createProject">+</span></div>
-            <div class="project">home</div>
 
         </div>
     </div>
 
-    <div class="body">
+    <div id="body">
+        <div id="content">
+
+        </div>
 
     </div>
 
     <dialog id="createProjectModal">
-        <form action="" method="dialog" id="createProjectForm">
+        <form action="" method="dialog" id="createProjectForm" autocomplete="off">
             <img src="/images/close.png" alt="close" id="closeProjectModal" class="close">
-            <input type="text" id="createProjectText" placeholder="Add a project" required>
+            <div>
+                <input type="text" id="createProjectText" placeholder="Add a project" required>
+                <input type="text" id="createProjectDescription" placeholder="Description">
+            </div>
+
             <button type="submit" id="submitProject" disabled>continue</button>
+
+            
+        </form>
+    </dialog>
+
+    <dialog id="createTaskModal">
+        <form action="" method="dialog" id="createTaskForm" autocomplete="off">
+            <img src="/images/close.png" alt="close" id="closeTaskModal" class="close">
+            <div>
+                <input type="text" id="createTaskText" placeholder="Add a task" required>
+                <input type="text" id="createTaskDescription" placeholder="Description">
+            </div>
+            
+            <div id="task-modal-footer">
+                <input type="date" id="task-date">
+                <select name="priority" id="task-priority">
+                    <option value="" selected>⚪ No priority</option>
+                    <option value="high">🔴 High</option>
+                    <option value="medium">🟡 Medium</option>
+                    <option value="low">🔵 Low</option>
+                </select>
+                <select name="project" id="task-project">
+                    <option value="myTasks">My tasks</option>
+                    <optgroup label="My projects">
+
+                    </optgroup>
+                </select>
+                <button type="submit" id="submitTask" disabled>continue</button>
+            </div>
+            
         </form>
     </dialog>
 

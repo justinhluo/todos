@@ -1,16 +1,22 @@
 import "./styles.css"
-import "./createProject";
+import {Project, createProject} from "./createProject.js";
+import {Task, createTask } from "./createTask.js"
+import {allProjects, allTasks} from "./store.js";
+
+
+document.getElementById("createProject").addEventListener("click", createProject);
+document.getElementById("createTask").addEventListener("click", createTask);
+
+
+
+const defaultProject = new Project("Home", "This is a test project, feel free to delete.");
+defaultProject.addToSidebar();
+defaultProject.renderContent();
+
+
 //  click my tasks-> list task objects
 //  click today, week, priority, completed -> sort task object then list
 //  click add task-> create task object
 //  click my projects-> list project objects
 //  click add project-> create project object
 //  click project -> list project contents (array of task objects)
-
-// const createProjectBtn = 
-
-export const projectArr = [];
-export const taskArr = [];
-// document.getElementById("createProject").addEventListener("click", createProject);
-
-

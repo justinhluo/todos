@@ -25,7 +25,7 @@ body {
     z-index: 1;
 }
 
-.body {
+#body {
     background-color: rgb(30, 30, 30);
     flex-grow: 1;
 }
@@ -55,6 +55,17 @@ body {
     white-space: nowrap;
     
 }
+
+.sidebar-project {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* gap: 50px; */
+}
+
+.delete-icon:hover {
+    filter: drop-shadow(0 0 5px white);
+}
 #name {
     font-size: 1.2rem;
 }
@@ -82,7 +93,7 @@ body {
     
 }
 
-#createProjectModal {
+dialog {
     border-radius: 10px;
     background-color: rgb(30, 30, 30);
     height: 250px;
@@ -93,31 +104,35 @@ body {
     transform: translate(-50%, -50%);
     border: none;
 }
-#createProjectModal::backdrop {
+dialog::backdrop {
     background: rgba(0, 0, 0, 0.7);
 }
-#createProjectForm {
+form {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-end;
     color: white;
-    /* gap: 20px; */
+}
+#task-modal-footer {
+    display: flex;
+    /* justify-content: space-between; */
+    gap: 15px;
+    align-items: center;
+    /* width: 100%; */
+    margin-bottom: 40px;
+    margin-left: 40px;
     
 }
-/* #createProjectForm > * {
-    margin: 20px;
-} */
-
-#createProjectText {
+input[type="text"] {
     align-self: flex-start;
     border: none;
     background-color: rgb(30, 30, 30);
     color: white;
     font-weight: bold;
     outline: none;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     margin-left: 40px;
     width: 90%;
 
@@ -128,16 +143,21 @@ button[type="submit"] {
     color: white;
     background-color: rgb(67, 117, 224);
     border: none;
-    margin-bottom: 40px;
     margin-right: 40px;
     font-weight: bold;
+}
+#createProjectDescription, #createTaskDescription {
+    font-size: 0.9rem;
+}
+#submitProject {
+    margin-bottom: 40px;
 }
 button[type="submit"]:disabled {
     background-color: rgb(39, 65, 111);
     pointer-events: none;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover, .add-task-btn:hover {
     background-color: rgb(95, 140, 235);
     cursor: pointer;
 }
@@ -149,4 +169,41 @@ button[type="submit"]:hover {
 
 .close:hover {
     cursor: pointer;
+}
+
+#content {
+    color: white;
+    margin-top: 80px;
+    padding-right: 25%;
+}
+
+#body {
+    display: flex;
+    justify-content: center;
+}
+
+.project-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-top {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.add-task-btn {
+    padding: 5px 30px;
+    border-radius: 20px;
+    color: white;
+    background-color: rgb(67, 117, 224);
+    border: none;
+    font-weight: bold;
+}
+
+#task-date, #task-project, #task-priority{
+    padding: 5px;
 }
