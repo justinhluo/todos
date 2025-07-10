@@ -33,7 +33,6 @@ submit.addEventListener("click", submitProject);
 function submitProject(event) {
     event.preventDefault();
     const newProject = new Project(text.value, description.value);
-    newProject.addToSidebar();
     newProject.renderContent();
     form.reset();
     modal.close();
@@ -52,9 +51,7 @@ export class Project {
     addTask.classList.add("add-task-btn");
     addTask.addEventListener("click", () => alert(this.name));
     this.addTask = addTask;
-  }
-    
-  addToSidebar() {
+
     const projectDiv = document.createElement("div");
     const projectName = document.createElement("span");
     const deleteProject = document.createElement("img");
@@ -72,6 +69,10 @@ export class Project {
   });
     this.sidebarElement = projectDiv;
   }
+    
+  // addToSidebar() {
+
+  // }
 
   deleteProject () {
     projects.removeChild(this.sidebarElement);

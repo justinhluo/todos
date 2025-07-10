@@ -1,4 +1,4 @@
-const modal = document.getElementById("createTaskModal");
+const modal = document.getElementById("create-task-modal");
 const form = document.getElementById("createTaskForm");
 const close = document.getElementById("closeTaskModal");
 const text = document.getElementById("createTaskText");
@@ -37,6 +37,7 @@ function submitTask(event) {
     modal.close();
     submit.disabled = true;
     newTask.renderTask();
+    allTasks.push(this);
 }
 
 export class Task {
@@ -45,10 +46,15 @@ export class Task {
         this.description = description;
         this.date = date;
         this.priority = priority;
-        this.project = project
+        this.project = project;
+
     }
 
     renderTask() {
         alert(this.name + this.description + this.date + this.priority + this.project)
     }
+}
+
+function renderTasks (tasks) {
+    
 }
