@@ -23,7 +23,7 @@ export function renderTasks() {
     addTask.textContent = "Add task";
     addTask.classList.add("add-task-btn");
     addTask.addEventListener("click", () => createTask(""));
-
+    addTask.classList.add("buttons");
     //headerTop.appendChild(addTask);
     // header.appendChild(headerTop);
     header.appendChild(description);

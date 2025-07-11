@@ -55,22 +55,25 @@
             </div>
             
             <div id="task-modal-footer">
-                <input type="date" id="task-date">
-                <select name="priority" id="task-priority">
-                    <option value="" selected>⚪ No priority</option>
-                    <option value="high">🔴 High</option>
-                    <option value="medium">🟡 Medium</option>
-                    <option value="low">🔵 Low</option>
-                </select>
-                <select name="project" id="task-project">
-                    <option value="" selected>My tasks</option>
-                    <optgroup label="My projects">
+                <div id="task-modal-footer-left">
+                    <input type="date" id="task-date">
+                    <select name="priority" id="task-priority">
+                        <option value="" selected>⚪ No priority</option>
+                        <option value="high">🔴 High</option>
+                        <option value="medium">🟡 Medium</option>
+                        <option value="low">🔵 Low</option>
+                    </select>
+                </div>
+                <div id="task-modal-footer-right">
+                    <select name="project" id="task-project">
+                        <option value="" selected>My tasks</option>
+                        <optgroup label="My projects">
 
-                    </optgroup>
-                </select>
-                <button type="submit" id="submitTask" disabled>continue</button>
-            </div>
-            
+                        </optgroup>
+                    </select>
+                    <button type="submit" id="submitTask" disabled>continue</button>
+                </div>
+            </div>   
         </form>
     </dialog>
 

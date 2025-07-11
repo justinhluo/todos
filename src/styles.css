@@ -129,24 +129,55 @@ form {
     align-items: flex-end;
     color: white;
 }
-#task-modal-footer {
+
+#task-modal-footer { 
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
-    gap: 15px;
+    gap: 10px;
     margin-bottom: 40px;
     margin-left: 40px;
+    flex-wrap: wrap;
+     
+}
+#task-modal-footer > * {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+/* #task-modal-footer-left {
+    display: flex;
+    gap: 15px;
+    align-items: center;
     
 }
-/* input[type="date"] {
-    width: 20px;
+#task-modal-footer-right {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+} */
+input[type="date"] {
+   border-radius: 20px;
+   border: none;
+   outline: none;
+   font-weight: 500;
+
 }
 #task-priority {
-    width: 45px;
-    background-color: rgb(226, 227, 216);
     border-radius: 20px;
     border: none;
-} */
+    font-weight: 500;
+}
+#task-project {
+    border-radius: 20px;
+    min-width: 135px;
+    border: none;
+    font-weight: 500;
+    
+}
+
+
 input[type="text"] {
     align-self: flex-start;
     border: none;
@@ -160,7 +191,9 @@ input[type="text"] {
 
 }
 button[type="submit"] {
-    padding: 10px 40px;
+    /* padding: 10px 40px; */
+    width: 120px;
+    height: 30px;
     border-radius: 20px;
     color: white;
     background-color: rgb(67, 117, 224);
@@ -201,38 +234,114 @@ button[type="submit"]:hover, .add-task-btn:hover {
     margin-top: 50px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    overflow: auto;
+    /* gap: 20px; */
+    
     
 }
 .task-div {
-    width: 100%;
+
+    width: 90%;
     min-width: 30vw;
+    /* gap: 10px; */
+    border-bottom: 1px solid grey;
+    
+    
+}
+.task-div-content {
+    border-radius: 20px;
+    /* border: 1px solid grey; */
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.task-div-focused {
+    background-color: rgb(125, 125, 125);
+}
+
+.task-div-content:not(.task-div-focused):hover {
+    cursor: pointer;
+    background-color: rgb(95, 95, 95);
+}
+
+.task-div-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.6rem;
+    margin-left: 25px;
+    /* padding-top: 20px; */
+    /* margin-top: 20px; */
+    
+}
+.task-div-middle-left {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    gap: 10px;
+}
+.task-div-middle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.task-div-bottom {
+    margin-left: 25px;
+    font-size: 0.9rem;
+    /* margin-bottom: 20px; */
 }
 
 .name-div{
     white-space: normal;
     overflow-wrap: break-word;
     word-break: break-word;
+    margin-right: 10px;    
+}
+
+.description-div {
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    margin-right: 10px; 
+    color: rgb(165, 165, 165);
+}
+
+.task-complete {
+    text-decoration: line-through;
+    font-style: italic;
+    color: rgb(80, 80, 80);
+}
+
+.task-complete-top {
+    color: rgb(80, 80, 80);
+}
+
+.completed-btn {
+     accent-color: rgb(90, 149, 90);
 }
 
 .task-container{
     
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    /* gap: 20px; */
+    margin-top: 20px;
 }
 
 #body {
     display: flex;
     justify-content: flex-start;
+    overflow: auto;
 }
 
 .header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    border-bottom: 1px solid grey;
+    width: 100%;
+    min-width: 40vw;
+    /* gap: 10px; */
 }
 
 .header-title {
@@ -245,7 +354,6 @@ button[type="submit"]:hover, .add-task-btn:hover {
     flex: 1 1 auto; 
     width: 100%; 
     flex-wrap: wrap;       
-    gap: 20px;
     align-items: center; 
 
 }
@@ -260,6 +368,7 @@ button[type="submit"]:hover, .add-task-btn:hover {
 }
 
 .buttons {
+    margin:20px 0;
     display: flex;
     align-items: center;
     gap: 20px;

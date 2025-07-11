@@ -20,9 +20,15 @@ document.getElementById("my-tasks").addEventListener("click", () => {
 });
 
 
-
+const defaultTask = new Task("test", "testing", "10/2/35", "high", "Mow the lawn");
 const defaultProject = new Project("Mow the lawn", "I should mow the lawn this weekend...");
-defaultProject.tasks.push(new Task("test", "", "", "high", ""));
+defaultProject.tasks.push(defaultTask);
+allTasks.unshift(defaultTask);
+console.log(allProjects);
+// defaultProject.tasks.push(new Task("test", "", "", "high", ""));
+// defaultProject.tasks.push(new Task("test", "", "", "high", ""));
+
+
 renderTasks();
 
 

@@ -69,6 +69,7 @@ export class Task {
         this.date = date;
         this.priority = priority;
         this.project = project;
+        this.completed = false;
         const deleteTask = document.createElement("img");
         deleteTask.src = deleteIcon;
         deleteTask.classList.add("delete-icon");
@@ -105,23 +106,81 @@ export class Task {
 
     renderTask() {
         const taskDiv = document.createElement("div");
-        taskDiv.classList.add("task-div")
+        taskDiv.classList.add("task-div");
+        const taskDivContent = document.createElement("div");
+        taskDivContent.classList.add("task-div-content");
+        const taskDivTop = document.createElement("div");
+        taskDivTop.classList.add("task-div-top");
+        const taskDivMiddle = document.createElement("div");
+        taskDivMiddle.classList.add("task-div-middle");
+        const taskDivMiddleLeft = document.createElement("div");
+        taskDivMiddleLeft.classList.add("task-div-middle-left");
+        const taskDivBottom = document.createElement("div");
+        taskDivBottom.classList.add("task-div-bottom");
+
+        const dateDiv = document.createElement("div");
+        dateDiv.textContent = this.date;
+        
+        const projectDiv = document.createElement("div");
+        
+        if(getActiveProject() == null) {
+            projectDiv.textContent = this.project;
+        }
+        
+        taskDivTop.appendChild(dateDiv);
+        taskDivTop.appendChild(projectDiv);
+        
         const nameDiv = document.createElement("div");
         nameDiv.classList.add("name-div");
         nameDiv.textContent = this.name;
 
-        taskDiv.appendChild(nameDiv);
-        taskDiv.appendChild(this.deleteIcon);
+        const completedBtn = document.createElement("input");
+        completedBtn.setAttribute("type", "checkbox");
+        completedBtn.classList.add("completed-btn");
+        
+        taskDivMiddleLeft.appendChild(completedBtn);
+        taskDivMiddleLeft.appendChild(nameDiv);
+        taskDivMiddle.appendChild(taskDivMiddleLeft);
+        taskDivMiddle.appendChild(this.deleteIcon);
 
-        if(this.priority == "") {
-            taskDiv.style.borderBottom = "1px solid grey";
-        }else if (this.priority == "high") {
-            taskDiv.style.borderBottom = "1px solid red";
-        }else if (this.priority == "medium") {
-            taskDiv.style.borderBottom = "1px solid yellow";
-        }else if (this.priority == "low") {
-            taskDiv.style.borderBottom = "1px solid blue";
+        const descriptionDiv = document.createElement("div");
+        descriptionDiv.classList.add("description-div");
+        descriptionDiv.textContent = this.description;
+        taskDivBottom.appendChild(descriptionDiv);
+    
+        taskDivContent.appendChild(taskDivTop);
+        taskDivContent.appendChild(taskDivMiddle);
+        taskDivContent.appendChild(taskDivBottom);
+        taskDiv.appendChild(taskDivContent);
+        completedBtn.addEventListener("click", (e)=> {
+            e.stopPropagation();
+            this.completed = !this.completed;
+            nameDiv.classList.toggle("task-complete");
+            descriptionDiv.classList.toggle("task-complete");
+            taskDivTop.classList.toggle("task-complete-top");
+        });
+        
+        if(this.completed == true) {
+            completedBtn.setAttribute("checked", "checked");
+            nameDiv.classList.toggle("task-complete");
+            descriptionDiv.classList.toggle("task-complete");
+            taskDivTop.classList.toggle("task-complete-top");
         }
+
+        taskDivContent.addEventListener("click", () => taskDivContent.classList.toggle("task-div-focused"))
+
+       
+
+        // if(this.priority == "") {
+        //     taskDiv.style.borderBottom = "1px solid grey";
+        // }else if (this.priority == "high") {
+            
+        
+        // }else if (this.priority == "medium") {
+        //     taskDiv.style.borderBottom = "1px solid yellow";
+        // }else if (this.priority == "low") {
+        //     taskDiv.style.borderBottom = "1px solid blue";
+        // }
         return taskDiv;
     }
 }

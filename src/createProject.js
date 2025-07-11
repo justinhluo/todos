@@ -146,6 +146,7 @@ export class Project {
     content.appendChild(header);
 
     const taskContainer = document.createElement("div");
+    taskContainer.classList.add("task-container");
     this.tasks.forEach(task=>taskContainer.appendChild(task.renderTask()));
     content.appendChild(taskContainer);
   }
