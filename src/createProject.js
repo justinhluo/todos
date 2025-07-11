@@ -9,9 +9,11 @@ const description = document.getElementById("createProjectDescription");
 const optgroup = document.querySelector("optgroup");
 
 import deleteIcon from "/images/delete.png";
+import deleteIconLarge from "/images/delete_large.png";
 
 import { allProjects, allTasks, getActiveProject, setActiveProject} from './store.js';
 import { createTask } from "./createTask.js";
+import { renderTasks } from "./renderTasks.js";
 
 export function createProject() {
     modal.showModal();
@@ -63,16 +65,20 @@ export class Project {
     projectDiv.appendChild(projectName);
     projectDiv.appendChild(deleteProject);
     projects.appendChild(projectDiv);
+    projectName.classList.add("sidebar-project-name");
     projectDiv.classList.add("sidebar-project");
-    deleteProject.classList.add("delete-icon");
+    deleteProject.classList.add("delete-icon", "sidebar-delete");
     projectDiv.addEventListener("click", () => {
       this.renderProjectContent();
-      setActiveProject(this);
+      
     });
     deleteProject.addEventListener("click", (e) => {
       e.stopPropagation();
       this.deleteProject();
   });
+
+    
+   // this.deleteIconLarge = deleteIconLarge;
     this.sidebarElement = projectDiv;
 
     
@@ -87,39 +93,57 @@ export class Project {
     projects.removeChild(this.sidebarElement);
     optgroup.removeChild(this.optionElement);
 
-    if (getActiveProject() === this) {
-      content.innerHTML = "";
+    if (getActiveProject() == this) {
+
       setActiveProject(null);
     }
+
     const index = allProjects.indexOf(this);
     
     if (index > -1) {
       allProjects.splice(index, 1);
     }
+
     this.tasks.forEach(task => {
       const index = allTasks.indexOf(task);
       if (index > -1) {
         allTasks.splice(index, 1);
       }
     });
+    
+    if(getActiveProject() == null) {
+      renderTasks();
+    }
   }
 
   renderProjectContent() {
+    setActiveProject(this);
     content.innerHTML = "";
-    const projectHeaderTop = document.createElement("div");
-    const projectHeader = document.createElement("div");
-    const projectTitle = document.createElement("div");
-    const projectDescription = document.createElement("div");
-    projectTitle.textContent = this.name;
-    projectDescription.textContent = this.description;
-    projectDescription.style.fontSize = "0.8rem";
-    projectHeaderTop.classList.add("project-top");
-    projectHeader.classList.add("project-header");
-    projectHeaderTop.appendChild(projectTitle);
-    projectHeaderTop.appendChild(this.addTask);
-    projectHeader.appendChild(projectHeaderTop);
-    projectHeader.appendChild(projectDescription);
-    content.appendChild(projectHeader);
+    const header = document.createElement("div");
+    const buttons = document.createElement("div");
+    buttons.classList.add("buttons");
+    const title = document.createElement("div");
+    const description = document.createElement("div");
+    
+    description.textContent = this.description;
+    title.classList.add("header-title");
+    header.classList.add("header");
+    description.classList.add("description");
+    header.appendChild(title);
+    
+    const deleteProjectLarge = document.createElement("img");
+    deleteProjectLarge.src = deleteIconLarge;
+    deleteProjectLarge.addEventListener("click", (e) => {
+      this.deleteProject();
+    });
+    deleteProjectLarge.classList.add("delete-icon");
+    buttons.appendChild(this.addTask);
+    buttons.appendChild(deleteProjectLarge);
+    title.textContent = this.name;
+    header.appendChild(description);
+    header.appendChild(buttons);
+
+    content.appendChild(header);
 
     const taskContainer = document.createElement("div");
     this.tasks.forEach(task=>taskContainer.appendChild(task.renderTask()));

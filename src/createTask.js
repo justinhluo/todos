@@ -39,27 +39,27 @@ function submitTask(event) {
     event.preventDefault();
     const newTask = new Task(text.value, description.value, date.value, priority.value, taskProject.value);
     const project = allProjects.find(p => p.name === taskProject.value);
-    if(taskProject.value !== "") {
-        
-        if (project) {
-            project.tasks.push(newTask);
+    allTasks.unshift(newTask);
+
+    if (project) {
+        project.tasks.unshift(newTask);
+        if(getActiveProject() == null) {
+            renderTasks();
+        }
+        else if(getActiveProject().name == project.name) {
+            project.renderProjectContent();
         }
     }
-    allTasks.push(newTask);
-    console.log(allTasks);
-    console.log(allProjects);
+    else {
+        if(getActiveProject() == null) {
+            renderTasks();
+        }
+    }
 
-    
     form.reset();
     modal.close();
     submit.disabled = true;
 
-    if(getActiveProject() != null) {
-        project.renderProjectContent();
-    }else {
-        renderTasks();
-    }
-    
 }
 
 export class Task {
@@ -81,7 +81,7 @@ export class Task {
     }
 
     deleteTask() {
-        alert("STOP");
+
         const index = allTasks.indexOf(this);
     
         if (index > -1) {
@@ -105,20 +105,22 @@ export class Task {
 
     renderTask() {
         const taskDiv = document.createElement("div");
+        taskDiv.classList.add("task-div")
         const nameDiv = document.createElement("div");
+        nameDiv.classList.add("name-div");
         nameDiv.textContent = this.name;
 
         taskDiv.appendChild(nameDiv);
         taskDiv.appendChild(this.deleteIcon);
 
-        if(this.priority = "") {
-            taskDiv.style.border = "1px solid grey";
-        }else if (this.priority = "high") {
-            taskDiv.style.border = "1px solid red";
-        }else if (this.priority = "medium") {
-            taskDiv.style.border = "1px solid yellow";
-        }else if (this.priority = "low") {
-            taskDiv.style.border = "1px solid blue";
+        if(this.priority == "") {
+            taskDiv.style.borderBottom = "1px solid grey";
+        }else if (this.priority == "high") {
+            taskDiv.style.borderBottom = "1px solid red";
+        }else if (this.priority == "medium") {
+            taskDiv.style.borderBottom = "1px solid yellow";
+        }else if (this.priority == "low") {
+            taskDiv.style.borderBottom = "1px solid blue";
         }
         return taskDiv;
     }

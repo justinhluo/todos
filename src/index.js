@@ -4,7 +4,6 @@ import {Task, createTask } from "./createTask.js";
 import { renderTasks } from "./renderTasks.js"
 import {allProjects, allTasks, setActiveProject, getActiveProject} from "./store.js";
 
-
 document.getElementById("createProject").addEventListener("click", (e) => {
     e.stopPropagation();
     createProject();
@@ -12,6 +11,7 @@ document.getElementById("createProject").addEventListener("click", (e) => {
 document.getElementById("create-task").addEventListener("click", (e) => {
     e.stopPropagation();
     createTask("");
+    
 });
 document.getElementById("my-tasks").addEventListener("click", () => {
     renderTasks();
@@ -21,8 +21,8 @@ document.getElementById("my-tasks").addEventListener("click", () => {
 
 
 
-const defaultProject = new Project("Home", "This is a test project, feel free to delete.");
-
+const defaultProject = new Project("Mow the lawn", "I should mow the lawn this weekend...");
+defaultProject.tasks.push(new Task("test", "", "", "high", ""));
 renderTasks();
 
 

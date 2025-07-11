@@ -21,13 +21,15 @@ body {
     gap: 10px;
     font-size: 0.9rem;
     overflow: auto;
-    /* box-shadow: 5px 0 10px 5px rgb(93, 145, 209); */
+    box-shadow: 5px 0 10px 5px rgb(80, 80, 80);
     z-index: 1;
+    min-width: 250px;
 }
 
 #body {
     background-color: rgb(50, 50, 50);
     flex-grow: 1;
+    
 }
 
 .profile {
@@ -50,7 +52,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 50px;
     font-weight: bold;
     white-space: nowrap;
     
@@ -60,11 +61,25 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* gap: 50px; */
+    gap: 10px;
 }
 
+.sidebar-delete {
+    display: none;
+}
+
+.sidebar-project:hover > .sidebar-delete {
+    display: block;
+}
+.sidebar-project-name {
+    max-width: 180px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 .delete-icon:hover {
-    filter: drop-shadow(0 0 5px white);
+    filter: drop-shadow(0 0 1px white);
+    cursor: pointer;
 }
 #name {
     font-size: 1.2rem;
@@ -89,8 +104,7 @@ body {
 
 .add {
     color: white;
-    font-size: 1.5rem;
-    
+    font-size: 1.5rem; 
 }
 
 dialog {
@@ -117,14 +131,22 @@ form {
 }
 #task-modal-footer {
     display: flex;
-    /* justify-content: space-between; */
+    justify-content: center;
+    width: 100%;
     gap: 15px;
-    align-items: center;
-    /* width: 100%; */
     margin-bottom: 40px;
     margin-left: 40px;
     
 }
+/* input[type="date"] {
+    width: 20px;
+}
+#task-priority {
+    width: 45px;
+    background-color: rgb(226, 227, 216);
+    border-radius: 20px;
+    border: none;
+} */
 input[type="text"] {
     align-self: flex-start;
     border: none;
@@ -143,11 +165,12 @@ button[type="submit"] {
     color: white;
     background-color: rgb(67, 117, 224);
     border: none;
-    margin-right: 40px;
+    /* margin-right: 40px; */
     font-weight: bold;
 }
 #createProjectDescription, #createTaskDescription {
     font-size: 0.9rem;
+    
 }
 #submitProject {
     margin-bottom: 40px;
@@ -173,29 +196,74 @@ button[type="submit"]:hover, .add-task-btn:hover {
 
 #content {
     color: white;
-    margin-top: 80px;
-    padding-right: 25%;
+    margin-left: 20vw;
+    margin-right: 10vw;
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 20px;
+    overflow: auto;
+    
+}
+.task-div {
+    width: 100%;
+    min-width: 30vw;
+}
+
+.name-div{
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.task-container{
+    
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 #body {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
-.project-header {
+.header {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
 }
 
-.project-top {
-    display: flex;
-    gap: 20px;
-    align-items: center;
+.header-title {
     font-size: 2rem;
     font-weight: bold;
+    display: flex;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    flex: 1 1 auto; 
+    width: 100%; 
+    flex-wrap: wrap;       
+    gap: 20px;
+    align-items: center; 
+
+}
+
+.description {
+    font-size: 0.8rem;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    flex: 1 1 auto; 
+    width: 100%; 
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
 }
 
 .add-task-btn {
@@ -213,4 +281,9 @@ button[type="submit"]:hover, .add-task-btn:hover {
 
 #task-project {
     max-width: 90px;
+}
+@media screen and (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
 }
