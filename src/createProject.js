@@ -11,7 +11,7 @@ const optgroup = document.querySelector("optgroup");
 import deleteIcon from "/images/delete.png";
 import deleteIconLarge from "/images/delete_large.png";
 
-import { allProjects, allTasks, getActiveProject, setActiveProject} from './store.js';
+import { allProjects, allTasks, getActiveProject, setActiveProject, saveData} from './store.js';
 import { createTask } from "./createTask.js";
 import { renderTasks } from "./renderTasks.js";
 
@@ -41,6 +41,7 @@ function submitProject(event) {
     form.reset();
     modal.close();
     submit.disabled = true;
+    saveData();
 }
 
 export class Project {
@@ -60,7 +61,7 @@ export class Project {
     const projectDiv = document.createElement("div");
     const projectName = document.createElement("span");
     const deleteProject = document.createElement("img");
-    projectName.textContent = this.name;
+    projectName.textContent = "# " + this.name;
     deleteProject.src = deleteIcon;
     projectDiv.appendChild(projectName);
     projectDiv.appendChild(deleteProject);
@@ -85,6 +86,12 @@ export class Project {
     option.textContent = this.name;
     optgroup.appendChild(option);
     this.optionElement = option;
+  }
+  
+  static fromData(obj) {
+    const project = new Project(obj.name, obj.description);
+    project.tasks = obj.tasks.map(Task.fromData); 
+    return project;
   }
  
   deleteProject () {
@@ -112,6 +119,7 @@ export class Project {
     if(getActiveProject() == null) {
       renderTasks();
     }
+    saveData();
   }
 
   renderProjectContent() {

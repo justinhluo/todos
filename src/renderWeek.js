@@ -1,8 +1,9 @@
 import {allTasks, setActiveProject} from "./store.js";
+import { formatFriendlyDate, parseLocalDate } from "./createTask.js";
 const content = document.getElementById("content");
 
 export function renderWeek() {
-    setActiveProject(null);
+    setActiveProject("week");
     content.innerHTML = "";
     const header = document.createElement("div");
     const title = document.createElement("div");
@@ -18,7 +19,13 @@ export function renderWeek() {
     content.appendChild(header);
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-container");
-    allTasks.forEach(task => taskContainer.appendChild(task.renderTask()));
+    allTasks.forEach(task => {
+      if((formatFriendlyDate(task.date) == parseLocalDate(task.date).toLocaleDateString(undefined, { weekday: "long" })) ||
+      (formatFriendlyDate(task.date) == "Today") ||
+      (formatFriendlyDate(task.date) == "Tomorrow")) {
+        taskContainer.appendChild(task.renderTask());
+      }
+    });
     content.appendChild(taskContainer);
     
     const taskDivs = taskContainer.querySelectorAll('.task-div-content');

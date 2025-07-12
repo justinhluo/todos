@@ -1,8 +1,9 @@
 import {allTasks, setActiveProject} from "./store.js";
+import { formatFriendlyDate } from "./createTask.js";
 const content = document.getElementById("content");
 
 export function renderToday() {
-    setActiveProject(null);
+    setActiveProject("today");
     content.innerHTML = "";
     const header = document.createElement("div");
     const title = document.createElement("div");
@@ -18,7 +19,9 @@ export function renderToday() {
     content.appendChild(header);
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-container");
-    allTasks.forEach(task => taskContainer.appendChild(task.renderTask()));
+    allTasks.forEach(task => {
+      if(formatFriendlyDate(task.date) == "Today") taskContainer.appendChild(task.renderTask());
+    });
     content.appendChild(taskContainer);
     
     const taskDivs = taskContainer.querySelectorAll('.task-div-content');

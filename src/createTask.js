@@ -9,10 +9,13 @@ const taskProject = document.getElementById("task-project");
 const submit = document.getElementById("submitTask");
 const content = document.getElementById("content");
 import deleteIcon from "/images/delete.png";
-import { allProjects, allTasks, setActiveProject, getActiveProject } from './store.js';
+import { allProjects, allTasks, setActiveProject, getActiveProject, saveData } from './store.js';
 import { renderTasks } from "./renderTasks.js";
 import { Project } from "./createProject.js";
-
+import { renderToday } from "./renderToday.js";
+import { renderWeek } from "./renderWeek.js";
+import { renderHighPriority } from "./renderHighPriority.js";
+import { renderCompleted } from "./renderCompleted.js";
 
 export function createTask(selected) {
     const select = document.getElementById("task-project");
@@ -42,36 +45,54 @@ function submitTask(event) {
     const newTask = new Task(text.value, description.value, date.value, priority.value, taskProject.value);
     const project = allProjects.find(p => p.name === taskProject.value);
     allTasks.unshift(newTask);
-
-    if (project) {
-        project.tasks.unshift(newTask);
-        if(getActiveProject() == null) {
-            renderTasks();
+    if(getActiveProject() == "today") {
+        renderToday();
+    }else if(getActiveProject() == "week") {
+        renderWeek();
+    }else if(getActiveProject() == "high") {
+        renderHighPriority();
+    }else if(getActiveProject() == "completed") {
+        renderCompleted();
+    }else {
+        if (project) {
+            project.tasks.unshift(newTask);
+            if(getActiveProject() == null) {
+                renderTasks();
+            }
+            else if(getActiveProject().name == project.name) {
+                project.renderProjectContent();
+            }
         }
-        else if(getActiveProject().name == project.name) {
-            project.renderProjectContent();
+        else {
+            if(getActiveProject() == null) {
+                renderTasks();
+            }
         }
     }
-    else {
-        if(getActiveProject() == null) {
-            renderTasks();
-        }
-    }
-
     form.reset();
     modal.close();
     submit.disabled = true;
-
+    saveData();
 }
 
 export class Task {
-    constructor(name, description, date, priority, project) {
+    constructor(name, description, date, priority, project, completed = false) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.priority = priority;
         this.project = project;
-        this.completed = false;
+        this.completed = completed;
+    }
+    static fromData(obj) {
+        return new Task(
+            obj.name,
+            obj.description,
+            obj.date,
+            obj.priority,
+            obj.project,
+            obj.completed
+        );
     }
 
     deleteTask() {
@@ -89,12 +110,22 @@ export class Task {
                project.tasks.splice(projectTaskIndex, 1);
             }
         }
-        if(getActiveProject() != null) {
-            project.renderProjectContent();
+        if(getActiveProject() == "today") {
+            renderToday();
+        }else if(getActiveProject() == "week") {
+            renderWeek();
+        }else if(getActiveProject() == "high") {
+            renderHighPriority();
+        }else if(getActiveProject() == "completed") {
+            renderCompleted();
         }else {
-            renderTasks();
+            if(getActiveProject() != null) {
+                project.renderProjectContent();
+            }else {
+                renderTasks();
+            }
         }
-        
+        saveData();      
     }
 
     renderTask() {
@@ -178,6 +209,11 @@ export class Task {
             } else {
                 taskDivContent.style.boxShadow = defaultBoxShadow;
             }
+
+            if(getActiveProject() == "completed") {
+                renderCompleted();
+            }
+            saveData();
         });
         
         if(this.completed == true) {
@@ -193,11 +229,11 @@ export class Task {
     }
 }
 
-function parseLocalDate(yyyyMmDd) {
+export function parseLocalDate(yyyyMmDd) {
   const [year, month, day] = yyyyMmDd.split("-").map(Number);
   return new Date(year, month - 1, day); 
 }
-function formatFriendlyDate(rawDate) {
+export function formatFriendlyDate(rawDate) {
   const inputDate = parseLocalDate(rawDate);
 
   const today = new Date();

@@ -2,7 +2,7 @@ import {allTasks, setActiveProject} from "./store.js";
 const content = document.getElementById("content");
 
 export function renderCompleted() {
-    setActiveProject(null);
+    setActiveProject("completed");
     content.innerHTML = "";
     const header = document.createElement("div");
     const title = document.createElement("div");
@@ -18,7 +18,9 @@ export function renderCompleted() {
     content.appendChild(header);
     const taskContainer = document.createElement("div");
     taskContainer.classList.add("task-container");
-    allTasks.forEach(task => taskContainer.appendChild(task.renderTask()));
+    allTasks.forEach(task => {
+      if(task.completed) taskContainer.appendChild(task.renderTask());
+    });
     content.appendChild(taskContainer);
     
     const taskDivs = taskContainer.querySelectorAll('.task-div-content');
