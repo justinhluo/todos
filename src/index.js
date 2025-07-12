@@ -25,6 +25,7 @@ function loadData() {
     allTasks.length = 0;
     allTasks.push(...parsedTasks);
   }
+  
 }
 document.addEventListener("DOMContentLoaded", () => {
   loadData();
