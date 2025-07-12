@@ -77,8 +77,6 @@ export class Project {
       this.deleteProject();
   });
 
-    
-   // this.deleteIconLarge = deleteIconLarge;
     this.sidebarElement = projectDiv;
 
     
@@ -149,6 +147,15 @@ export class Project {
     taskContainer.classList.add("task-container");
     this.tasks.forEach(task=>taskContainer.appendChild(task.renderTask()));
     content.appendChild(taskContainer);
+  
+    const taskDivs = taskContainer.querySelectorAll('.task-div-content');
+    taskDivs.forEach(taskDiv => {
+      taskDiv.addEventListener('click', () => {
+        taskDivs.forEach(t => t.classList.remove('task-div-focused'));
+        taskDiv.classList.add('task-div-focused');
+      });
+    });
+
   }
 
 }

@@ -17,6 +17,8 @@ import { Project } from "./createProject.js";
 export function createTask(selected) {
     const select = document.getElementById("task-project");
     select.value = selected;
+    const dateInput = document.getElementById("task-date");
+    dateInput.value = getLocalDateString();
     modal.showModal();
 }
 
@@ -70,15 +72,6 @@ export class Task {
         this.priority = priority;
         this.project = project;
         this.completed = false;
-        const deleteTask = document.createElement("img");
-        deleteTask.src = deleteIcon;
-        deleteTask.classList.add("delete-icon");
-        deleteTask.addEventListener("click", (e) => {
-            e.stopPropagation();
-            this.deleteTask();
-        });
-        this.deleteIcon = deleteTask;
-
     }
 
     deleteTask() {
@@ -105,22 +98,33 @@ export class Task {
     }
 
     renderTask() {
+        const deleteTask = document.createElement("img");
+        deleteTask.src = deleteIcon;
+        deleteTask.classList.add("delete-icon", "delete-task");
+        deleteTask.addEventListener("click", (e) => {
+            e.stopPropagation();
+            this.deleteTask();
+        });
+
         const taskDiv = document.createElement("div");
         taskDiv.classList.add("task-div");
         const taskDivContent = document.createElement("div");
-        taskDivContent.classList.add("task-div-content");
+        taskDivContent.classList.add("task-div-content", this.priority);
         const taskDivTop = document.createElement("div");
+        const taskDivTopRight = document.createElement("div");
+        taskDivTopRight.classList.add("task-div-top-right");
         taskDivTop.classList.add("task-div-top");
         const taskDivMiddle = document.createElement("div");
         taskDivMiddle.classList.add("task-div-middle");
-        const taskDivMiddleLeft = document.createElement("div");
-        taskDivMiddleLeft.classList.add("task-div-middle-left");
         const taskDivBottom = document.createElement("div");
         taskDivBottom.classList.add("task-div-bottom");
 
         const dateDiv = document.createElement("div");
-        dateDiv.textContent = this.date;
         
+        if(this.date) {
+            dateDiv.textContent = formatFriendlyDate(this.date);
+        }
+
         const projectDiv = document.createElement("div");
         
         if(getActiveProject() == null) {
@@ -128,8 +132,9 @@ export class Task {
         }
         
         taskDivTop.appendChild(dateDiv);
-        taskDivTop.appendChild(projectDiv);
-        
+        taskDivTopRight.appendChild(projectDiv);
+        taskDivTopRight.appendChild(deleteTask);
+        taskDivTop.appendChild(taskDivTopRight);
         const nameDiv = document.createElement("div");
         nameDiv.classList.add("name-div");
         nameDiv.textContent = this.name;
@@ -137,11 +142,9 @@ export class Task {
         const completedBtn = document.createElement("input");
         completedBtn.setAttribute("type", "checkbox");
         completedBtn.classList.add("completed-btn");
-        
-        taskDivMiddleLeft.appendChild(completedBtn);
-        taskDivMiddleLeft.appendChild(nameDiv);
-        taskDivMiddle.appendChild(taskDivMiddleLeft);
-        taskDivMiddle.appendChild(this.deleteIcon);
+       
+        taskDivMiddle.appendChild(completedBtn);
+        taskDivMiddle.appendChild(nameDiv);
 
         const descriptionDiv = document.createElement("div");
         descriptionDiv.classList.add("description-div");
@@ -152,12 +155,29 @@ export class Task {
         taskDivContent.appendChild(taskDivMiddle);
         taskDivContent.appendChild(taskDivBottom);
         taskDiv.appendChild(taskDivContent);
+
+            const originalBoxShadow = {
+                none: "inset 0 0 10px 1px grey",
+                high: "inset 0 0 10px 1px red",
+                medium: "inset 0 0 10px 1px yellow",
+                low: "inset 0 0 10px 1px rgb(69, 218, 49)"
+         };
+
+        const defaultBoxShadow = originalBoxShadow[this.priority] || "none";
+        taskDivContent.style.boxShadow = defaultBoxShadow;
         completedBtn.addEventListener("click", (e)=> {
             e.stopPropagation();
             this.completed = !this.completed;
             nameDiv.classList.toggle("task-complete");
             descriptionDiv.classList.toggle("task-complete");
             taskDivTop.classList.toggle("task-complete-top");
+            if(taskDivContent.classList.contains("task-div-focused")) taskDivContent.classList.remove("task-div-focused");
+            taskDivContent.classList.toggle("task-content-disabled");
+            if (this.completed) {
+                taskDivContent.style.boxShadow = "none";
+            } else {
+                taskDivContent.style.boxShadow = defaultBoxShadow;
+            }
         });
         
         if(this.completed == true) {
@@ -165,28 +185,52 @@ export class Task {
             nameDiv.classList.toggle("task-complete");
             descriptionDiv.classList.toggle("task-complete");
             taskDivTop.classList.toggle("task-complete-top");
+            if(taskDivContent.classList.contains("task-div-focused")) taskDivContent.classList.remove("task-div-focused");
+            taskDivContent.classList.toggle("task-content-disabled");
+            taskDivContent.style.boxShadow = "none";
         }
-
-        taskDivContent.addEventListener("click", () => taskDivContent.classList.toggle("task-div-focused"))
-
-       
-
-        // if(this.priority == "") {
-        //     taskDiv.style.borderBottom = "1px solid grey";
-        // }else if (this.priority == "high") {
-            
-        
-        // }else if (this.priority == "medium") {
-        //     taskDiv.style.borderBottom = "1px solid yellow";
-        // }else if (this.priority == "low") {
-        //     taskDiv.style.borderBottom = "1px solid blue";
-        // }
         return taskDiv;
     }
 }
 
+function parseLocalDate(yyyyMmDd) {
+  const [year, month, day] = yyyyMmDd.split("-").map(Number);
+  return new Date(year, month - 1, day); 
+}
+function formatFriendlyDate(rawDate) {
+  const inputDate = parseLocalDate(rawDate);
 
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
 
-if (import.meta.hot) {
-  import.meta.hot.decline();
+  function normalize(date) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
+
+  const normalizedInput = normalize(inputDate);
+  const normalizedToday = normalize(today);
+  const normalizedTomorrow = normalize(tomorrow);
+
+  const msInDay = 24 * 60 * 60 * 1000;
+  const daysDiff = Math.round((normalizedInput - normalizedToday) / msInDay);
+
+  if (daysDiff === 0) return "Today";
+  if (daysDiff === 1) return "Tomorrow";
+  if (daysDiff > 1 && daysDiff < 7) {
+    return inputDate.toLocaleDateString(undefined, { weekday: "long" }); 
+  }
+  return inputDate.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+function getLocalDateString() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); 
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }

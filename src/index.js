@@ -3,6 +3,10 @@ import {Project, createProject} from "./createProject.js";
 import {Task, createTask } from "./createTask.js";
 import { renderTasks } from "./renderTasks.js"
 import {allProjects, allTasks, setActiveProject, getActiveProject} from "./store.js";
+import { renderToday } from "./renderToday.js";
+import { renderWeek } from "./renderWeek.js";
+import { renderHighPriority } from "./renderHighPriority.js";
+import { renderCompleted } from "./renderCompleted.js";
 
 document.getElementById("createProject").addEventListener("click", (e) => {
     e.stopPropagation();
@@ -19,8 +23,29 @@ document.getElementById("my-tasks").addEventListener("click", () => {
 
 });
 
+document.getElementById("today").addEventListener("click", () => {
+    renderToday();
+    setActiveProject(null);
 
-const defaultTask = new Task("test", "testing", "10/2/35", "high", "Mow the lawn");
+});
+document.getElementById("week").addEventListener("click", () => {
+    renderWeek();
+    setActiveProject(null);
+
+});
+document.getElementById("high-priority").addEventListener("click", () => {
+    renderHighPriority();
+    setActiveProject(null);
+
+});
+document.getElementById("completed").addEventListener("click", () => {
+    renderCompleted();
+    setActiveProject(null);
+
+});
+
+const today = new Date().toISOString().split('T')[0];
+const defaultTask = new Task("test", "testing", today, "high", "Mow the lawn");
 const defaultProject = new Project("Mow the lawn", "I should mow the lawn this weekend...");
 defaultProject.tasks.push(defaultTask);
 allTasks.unshift(defaultTask);

@@ -9,6 +9,3 @@ export function getActiveProject() {
 export function setActiveProject(project) {
   activeProject = project;
 }
-if (import.meta.hot) {
-  import.meta.hot.decline();
-}

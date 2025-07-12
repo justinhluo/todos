@@ -13,14 +13,14 @@
             <div id="name">Ingrid Lin</div> 
         </div>
         <div id="tasks">
-            <div id="my-tasks"><span>My tasks</span><span class="add" id="create-task">+</span></div>
-            <div class="today">Today</div>
-            <div class="week">This Week</div>
-            <div class="high-priority">High Priority</div>
-            <div class="completed">Completed</div>
+            <div id="my-tasks"><span>My Tasks</span><span class="add" id="create-task">+</span></div>
+            <div id="today">Today</div>
+            <div id="week">This Week</div>
+            <div id="high-priority">High Priority</div>
+            <div id="completed">Completed</div>
         </div>
         <div id="projects">
-            <div id="my-projects"><span>My projects</span><span class="add" id="createProject">+</span></div>
+            <div id="my-projects"><span>My Projects</span><span class="add" id="createProject">+</span></div>
 
         </div>
     </div>
@@ -36,8 +36,8 @@
         <form action="" method="dialog" id="createProjectForm" autocomplete="off">
             <img src="/images/close.png" alt="close" id="closeProjectModal" class="close">
             <div>
-                <input type="text" id="createProjectText" placeholder="Add a project" required>
-                <input type="text" id="createProjectDescription" placeholder="Description">
+                <input type="text" id="createProjectText" placeholder="Add a project" required maxlength="30">
+                <input type="text" id="createProjectDescription" placeholder="Description" maxlength="100">
             </div>
 
             <button type="submit" id="submitProject" disabled>continue</button>
@@ -50,18 +50,18 @@
         <form action="" method="dialog" id="createTaskForm" autocomplete="off">
             <img src="/images/close.png" alt="close" id="closeTaskModal" class="close">
             <div>
-                <input type="text" id="createTaskText" placeholder="Add a task" required>
-                <input type="text" id="createTaskDescription" placeholder="Description">
+                <input type="text" id="createTaskText" placeholder="Add a task" required maxlength="30">
+                <input type="text" id="createTaskDescription" placeholder="Description" maxlength="100">
             </div>
             
             <div id="task-modal-footer">
                 <div id="task-modal-footer-left">
                     <input type="date" id="task-date">
                     <select name="priority" id="task-priority">
-                        <option value="" selected>⚪ No priority</option>
+                        <option value="none" selected>⚪ No priority</option>
                         <option value="high">🔴 High</option>
                         <option value="medium">🟡 Medium</option>
-                        <option value="low">🔵 Low</option>
+                        <option value="low">🟢 Low</option>
                     </select>
                 </div>
                 <div id="task-modal-footer-right">
