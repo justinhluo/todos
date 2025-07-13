@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos</title>
+    <link rel="icon" type="image/x-icon" href="e8feb0c1327db6c34b66.ico">
+<script defer src="main.js"></script></head>
+<body>
+    <div class="sidebar">
+        <div class="profile">
+            <div id="profile-pic"><a href="https://github.com/justinhluo/todos"><img src="925aa8e685ab0217bb34.png" alt="profile" height="50px"></a></div>
+            <div id="name"><a href="https://github.com/justinhluo">Justin Luo</a></div> 
+        </div>
+        <div id="tasks">
+            <div id="my-tasks"><span>My Tasks</span><span class="add" id="create-task">+</span></div>
+            <div id="today">Today</div>
+            <div id="week">This Week</div>
+            <div id="high-priority">High Priority</div>
+            <div id="completed">Completed</div>
+        </div>
+        <div id="projects">
+            <div id="my-projects"><span>My Projects</span><span class="add" id="createProject">+</span></div>
+
+        </div>
+    </div>
+
+    <div id="body">
+        <div id="content">
+
+        </div>
+
+    </div>
+
+    <dialog id="createProjectModal">
+        <form action="" method="dialog" id="createProjectForm" autocomplete="off">
+            <img src="c49303b1bf7c6c874eee.png" alt="close" id="closeProjectModal" class="close">
+            <div>
+                <input type="text" id="createProjectText" placeholder="Add a project" required maxlength="30">
+                <input type="text" id="createProjectDescription" placeholder="Description" maxlength="100">
+            </div>
+
+            <button type="submit" id="submitProject" disabled>continue</button>
+
+            
+        </form>
+    </dialog>
+
+    <dialog id="create-task-modal">
+        <form action="" method="dialog" id="createTaskForm" autocomplete="off">
+            <img src="c49303b1bf7c6c874eee.png" alt="close" id="closeTaskModal" class="close">
+            <div>
+                <input type="text" id="createTaskText" placeholder="Add a task" required maxlength="30">
+                <input type="text" id="createTaskDescription" placeholder="Description" maxlength="100">
+            </div>
+            
+            <div id="task-modal-footer">
+                <div id="task-modal-footer-left">
+                    <input type="date" id="task-date">
+                    <select name="priority" id="task-priority">
+                        <option value="none" selected>⚪ No priority</option>
+                        <option value="high">🔴 High</option>
+                        <option value="medium">🟡 Medium</option>
+                        <option value="low">🟢 Low</option>
+                    </select>
+                </div>
+                <div id="task-modal-footer-right">
+                    <select name="project" id="task-project">
+                        <option value="" selected>My tasks</option>
+                        <optgroup label="My projects">
+
+                        </optgroup>
+                    </select>
+                    <button type="submit" id="submitTask" disabled>continue</button>
+                </div>
+            </div>   
+        </form>
+    </dialog>
+
+    <dialog id="delete-project-modal">
+        <form action="" method="dialog" id="delete-project-form" autocomplete="off">
+            <div id="confirm-delete-text">
+                Deleting a project will also delete all tasks associated with it. This action cannot be undone. Do you wish to continue?
+            </div>
+
+           <div id="confirm-delete-btns"><button type="submit" id="cancel-delete">cancel</button><button type="submit" id="continue-delete">proceed</button></div>
+        </form>
+    </dialog>
+
+</body>
+</html>
