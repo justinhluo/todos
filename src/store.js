@@ -1,4 +1,4 @@
-
+//store.js
 export let allProjects = [];
 export let allTasks = [];
 let activeProject = null;

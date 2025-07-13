@@ -412,6 +412,36 @@ button[type="submit"]:hover, .add-task-btn:hover {
 #task-project {
     max-width: 90px;
 }
+
+#confirm-delete-text {
+    margin: 50px;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+#confirm-delete-btns {
+    align-self: center;
+    margin-bottom: 50px;
+    display: flex;
+    gap: 10px;
+}
+
+#cancel-delete {
+    background-color: rgb(25, 24, 24);
+    color: rgb(227, 227, 227);
+    height: 50px;
+    width: 150px;
+    outline: none;
+}
+
+#continue-delete {
+    background-color: rgb(198, 30, 30);
+    height: 50px;
+    width: 150px;
+}
+#continue-delete:hover, #cancel-delete:hover {
+    box-shadow: inset 0 0 10px  white;
+}
+
 @media screen and (max-width: 600px) {
   .sidebar {
     display: none;

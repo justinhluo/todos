@@ -1,3 +1,4 @@
+//createProject.js
 const modal = document.getElementById("createProjectModal");
 const form = document.getElementById("createProjectForm");
 const close = document.getElementById("closeProjectModal");
@@ -7,12 +8,14 @@ const projects = document.getElementById("projects");
 const content = document.getElementById("content");
 const description = document.getElementById("createProjectDescription");
 const optgroup = document.querySelector("optgroup");
-
+const deleteModal = document.getElementById("delete-project-modal");
+const cancelDelete = document.getElementById("cancel-delete");
+const continueDelete = document.getElementById("continue-delete");
+let projectToDelete = null;
 import deleteIcon from "/images/delete.png";
 import deleteIconLarge from "/images/delete_large.png";
-
 import { allProjects, allTasks, getActiveProject, setActiveProject, saveData} from './store.js';
-import { createTask } from "./createTask.js";
+import { createTask, Task} from "./createTask.js";
 import { renderTasks } from "./renderTasks.js";
 
 export function createProject() {
@@ -30,6 +33,19 @@ text.addEventListener("input", ()=> {
     } else {
         submit.disabled = false;
     }
+});
+
+cancelDelete.addEventListener("click", () => {
+  deleteModal.close();
+  projectToDelete = null;
+});
+
+continueDelete.addEventListener("click", () => {
+  if (projectToDelete) {
+    projectToDelete.deleteConfirmed();
+    deleteModal.close();
+    projectToDelete = null;
+  }
 });
 
 submit.addEventListener("click", submitProject);
@@ -93,8 +109,8 @@ export class Project {
     project.tasks = obj.tasks.map(Task.fromData); 
     return project;
   }
- 
-  deleteProject () {
+  
+  deleteConfirmed() {
     projects.removeChild(this.sidebarElement);
     optgroup.removeChild(this.optionElement);
 
@@ -120,6 +136,15 @@ export class Project {
       renderTasks();
     }
     saveData();
+  }
+ 
+  deleteProject() {
+    if (this.tasks.length !== 0) {
+      projectToDelete = this; 
+      deleteModal.showModal();
+    } else {
+      this.deleteConfirmed();
+    }
   }
 
   renderProjectContent() {

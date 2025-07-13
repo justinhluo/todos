@@ -1,3 +1,4 @@
+//renderTasks.js
 import { createTask } from "./createTask.js";
 import {allTasks, setActiveProject} from "./store.js";
 const content = document.getElementById("content");

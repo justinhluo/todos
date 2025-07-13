@@ -1,3 +1,4 @@
+//createtask.js
 const modal = document.getElementById("create-task-modal");
 const form = document.getElementById("createTaskForm");
 const close = document.getElementById("closeTaskModal");
@@ -43,36 +44,32 @@ submit.addEventListener("click", submitTask);
 function submitTask(event) {
     event.preventDefault();
     const newTask = new Task(text.value, description.value, date.value, priority.value, taskProject.value);
-    const project = allProjects.find(p => p.name === taskProject.value);
     allTasks.unshift(newTask);
-    if(getActiveProject() == "today") {
-        renderToday();
-    }else if(getActiveProject() == "week") {
-        renderWeek();
-    }else if(getActiveProject() == "high") {
-        renderHighPriority();
-    }else if(getActiveProject() == "completed") {
-        renderCompleted();
-    }else {
-        if (project) {
-            project.tasks.unshift(newTask);
-            if(getActiveProject() == null) {
-                renderTasks();
-            }
-            else if(getActiveProject().name == project.name) {
-                project.renderProjectContent();
-            }
-        }
-        else {
-            if(getActiveProject() == null) {
-                renderTasks();
-            }
-        }
+
+    const project = allProjects.find(p => p.name === taskProject.value);
+
+    if (project) {
+        project.tasks.unshift(newTask);
     }
+
+    if (getActiveProject() === "today") {
+        renderToday();
+    } else if (getActiveProject() === "week") {
+        renderWeek();
+    } else if (getActiveProject() === "high") {
+        renderHighPriority();
+    } else if (getActiveProject() === "completed") {
+        renderCompleted();
+    } else if (getActiveProject() != null && getActiveProject().name === taskProject.value) {
+        getActiveProject().renderProjectContent();
+    } else {
+        renderTasks(); 
+    }
+
     form.reset();
     modal.close();
     submit.disabled = true;
-    saveData();
+    saveData(); 
 }
 
 export class Task {
